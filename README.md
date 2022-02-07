@@ -1,5 +1,5 @@
 # Flippur
-Utilized Python beautiful soup and selenium to web scrape popular e-commerce sites. The information was then displayed in HTML with Flask.
+Utilized beautiful soup and selenium in Python to web scrape reselling sites. Only listings that are selling below their value are shown.
 
 # Disclaimer
-The current scraping does not work because the scraping has not been updated.
+Project is depreciated, the sites that were scraped changed their HTML.
