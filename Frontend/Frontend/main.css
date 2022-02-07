@@ -1,0 +1,751 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  overflow-y: overlay;
+  
+  background-color: white;
+}
+
+.dark-mode {
+  background-color: #212121;
+}
+/*-----------------------------Top Nav Bar------------------------------*/
+.topnav {
+  overflow: hidden;
+  top: 0;
+  background-color: #e9e9e9;
+  width: 100vw;
+  height: 47px;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
+}
+
+.topnavdark {
+  background-color: darkorange;
+}
+
+.topnav .navitem {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 75px;
+}
+
+.topnav .navitem:hover {
+  background-color: #CCCCCC;
+  color: black;
+  text-decoration: none;
+}
+
+.topnavdark .navitem:hover {
+  background-color: #DF7B00;
+}
+
+.topnav .navactive {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 75px;
+  background-color: orange;
+  color: white;
+}
+
+.topnavdark .navactive {
+  color: black;
+  background-color: #FF7700;
+}
+
+.topnav .navactive:hover {
+  background-color: darkorange;
+  text-decoration: none;
+}
+
+.topnavdark .navactive:hover {
+  background-color: #DF7B00;
+  text-decoration: none;
+}
+
+.topnav img {
+  float: right;
+  margin-right: 24px;
+  margin-top: 7px;
+  height: 35px;
+  width: 35px;
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 6px;
+  margin-left: 12px;
+  border: black;
+  border-radius: 18px;
+  font-size: 17px;
+  width: 77vw;
+}
+
+.topnavdark input[type=text] {
+  transform: translateY(-1px);
+  background-color: #212121;
+}
+
+.topnav .search-container input {
+  caret-color: darkorange;
+  color: darkorange;
+  outline: none;
+  padding-left: 12px;
+}
+
+.topnav .search-container button {
+  padding: 8 15px;
+  margin-top: 6px;
+  background: white;
+  border-color: white;
+  border-radius: 18px;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  max-width: 45px;
+}
+
+.topnavdark .search-container button {
+  background-color: darkorange;
+}
+
+.topnav .search-container button:hover {
+  background: orange;
+}
+
+.topnavdark .search-container button:hover {
+  background: orange;
+}
+
+@media screen and (max-width: 1080px) {
+  .topnav {
+    height: auto;
+    max-height: 47px;
+  }
+
+  .topnav input[type=text] {
+    width: auto;
+    min-width: 45vw;
+  }
+}
+
+.modebutton {
+  width: 35px;
+  height: 35px;
+  float: right;
+  background-image: 'static/images/moon_symbol.png';
+  cursor: pointer;
+}
+
+.welcome {
+  display: block;
+  width: 100vw;
+  top: 30%;
+  position: absolute;
+  text-align: center;
+  color: black;
+}
+
+.welcomedark {
+  color: rgba(255,255,255,0.87);
+}
+/*-------------------------------Filters----------------------------*/
+.filters {
+  height: 100%;
+  position: fixed;
+  width: 0px;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  padding-top: 30px;
+  transition: 0.5s;
+  background-color: rgba(255, 145, 0, 0.75);
+  box-shadow: 0px -16px 16px 0px rgba(0,0,0,0.2);
+}
+
+.filterclose {
+  font-size: x-large;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 26px;
+  height: 32px;
+  text-align: center;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  color: black;
+}
+
+.filterclose:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.filteropen {
+  background-color: rgb(255, 255, 255, 0.1);
+  float: right;
+  color: orange;
+  font-size: 16px;
+  padding: 3px;
+  border: none;
+  text-decoration: none;
+  outline: none;
+  margin-right: 16px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.filteropen:hover {
+  color: darkorange;
+  background-color: #f8f8f8;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.filteropendark:hover {
+  background-color: #666666;
+}
+
+.filters h1 {
+  position: relative;
+  color: black;
+  height: 20px;
+  margin-left: 10px;
+}
+
+.filteroptions {
+  color: black;
+  display: grid;
+}
+
+.filterbtn {
+  color: black;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  text-decoration: none;
+  font-size: large;
+}
+
+.filterbtn:hover{
+  text-decoration: none;
+  color: black
+}
+
+.filterinput input{
+  margin-left: 5px;
+  width: 95%;
+  outline: none;
+  border: none;
+  caret-color: darkorange;
+}
+
+.filterinputdark input {
+  color: #212121;
+  background-color: darkgrey;
+}
+/*-------------------------------Item display grid----------------------------*/
+.itemhr {
+  border: 1px solid orange;
+}
+
+.itemgrid {
+  display: grid;
+  padding: 10px;
+
+  margin-top: 24px;
+  
+  width: 99vw;
+  grid-template-columns: auto auto auto auto auto auto;
+  position: absolute;
+  overflow-x: visible;
+}
+
+.itemgriddark {
+  color: rgba(255,255,255,0.87);
+}
+
+.itembloc {
+  margin-left: 25px;
+  padding: 10px;
+  width: 90vw;
+}
+/*-------------------------------Individual Items----------------------------*/
+.avgdisplay {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 12px;
+
+  font-weight: bold;
+}
+
+.avgdisplaydark {
+  color: rgba(255,255,255,0.87);
+}
+
+.item {
+  float: left;
+  max-width: 300px;
+  width: 14.28vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.item:hover {
+  background-color: #CCCCCC;
+}
+
+.itemdark:hover {
+  background-color: rgba(51,51,51,0.87);
+}
+
+.itemimage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-radius: 12px;
+  width: 10vw;
+  height: 12vw;
+}
+
+.itemtitle {
+  float: left;
+  text-align: center;
+  font-size: medium;
+  margin-left: 10px;
+}
+
+.itemprice {
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  clear: both;
+}
+
+.sitelogo {
+  float: right;
+  margin: 10px;
+  height: 20px;
+  width: 50px;
+}
+/*-------------------------------Full item view----------------------------*/
+.fullitem {
+  background: rgb(220, 220, 220, 0.95);
+  width: 85vw;
+  height: 45vw;
+  margin-left: auto;
+  margin-right: auto;
+  left: 5vw;
+  right: 5vw;
+  top: 4vw;
+  border: 1px solid orange;
+  border-radius: 18px;
+  position: fixed;
+  font-size: x-large;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+  display: grid;
+  grid-gap: 10px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.fitemdark {
+  background: rgba(102,102,102,0.95);
+}
+
+.fitemimages {
+  display: grid;
+  /*margin-left: 4vw;
+  margin-right: auto;*/
+  width: 75vw;
+  height: 380px;
+  left: 0;
+  right: 0;
+  margin: 1% auto;
+  grid-template-columns: auto auto auto auto auto;
+}
+
+.fitemimage {
+  width: auto;
+  max-width: 16.3vw;
+  max-height: 380px;
+  padding: 10px;
+  left: 0;
+  right: 0;
+  margin: 1% auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.fiteminfo {
+  background: rgb(140, 140, 140, 0.85);
+  display: grid;
+  position: absolute;
+  /*margin-left: 25px;
+  margin-right: 25px;*/
+  bottom: 25px;
+  height: 25vw;
+  border-radius: 18px;
+  width: 82vw;
+  overflow-x: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+  margin: 5% auto;
+  margin-bottom: 0px;
+  left: 0;
+  right: 0;
+}
+
+.fitemtitle {
+  float: left;
+  text-align: left;
+  margin-left: 25px;
+  font-size: x-large;
+  max-width: 40vw;
+  max-height: 10vw;
+
+  grid-column: 1;
+  grid-row:1;
+
+  /*border: 2px solid black;
+  padding-top: 25%;
+  padding: auto;*/
+}
+
+.fiframe {
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80vw;
+  height: 18vw;
+  border: none;
+
+  grid-column: 1 / span 3;
+  grid-row: 2;
+}
+
+.fdesc {
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80vw;
+  height: 18vw;
+  border: none;
+
+  grid-column: 1 / span 3;
+  grid-row: 2;
+}
+
+.fitemprice {
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  clear: both;
+
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.fsitelogo {
+  float: right;
+  margin: 10px;
+  height: 40px;
+  width: 100px;
+  right: 0;
+  border: none;
+  display: none;
+
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.closebutton {
+  position: absolute;
+  top: 4px;
+  right: 0px;
+  width: 26px;
+  height: 26px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  color: orange;
+}
+
+.closebutton:hover {
+  color: black;
+  text-decoration: none;
+}
+/*----------------------------Media query for item and fullitem-------------------------------*/
+@media screen and (max-width: 1920px) {
+  .itemgrid {
+    grid-template-columns: auto auto auto auto auto;
+  }
+
+  item {
+    width: 20vw;
+  }
+
+  .fullitem {
+    height: 43vw;
+    padding: none;
+    top:5vw;
+  }
+
+  .fitemimages {
+    margin: 1% auto;
+  }
+
+  .fitemimage {
+    max-width: 16.3vw;
+    max-height: 265px;
+    top: 0px;
+    padding: none;
+  }
+}
+/*------------------------------Loader-----------------------------*/
+.loader{
+  position: fixed;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid darkorange;
+  width: 120px;
+  height: 120px;
+  /*-webkit-animation: spion2s linear infinite;*/
+  animation: spin 2s linear infinite;
+  overflow-x: auto;
+
+  margin: 5% auto;
+  left: 0;
+  right: 0;
+  margin-top: 10vw;
+  z-index: 4
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/*-------------------------------Footer - Unused----------------------------*/
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  background-color: orange;
+  color: white;
+}
+
+/*------------------------------Dropdown menus-----------------------------*/
+.dropbtn {
+  background-color: orange;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 130px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-contentdark {
+  background-color: #4B4B4B;
+  color: rgba(255,255,255,0.87);
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.dropdown-content label {
+  margin-top: 2px;
+  margin-left: 2px;
+  padding-bottom: 2px;
+}
+.dropdown-content input {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: darkorange;}
+/*----------------------------Custom check boxes-------------------------------*/
+.checkcontainer {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  padding-left: 35px;
+  user-select: none;
+}
+
+.checkcontainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: 4px;
+  background-color: darkorange;
+}
+
+.checkcontainer:hover input ~ .checkmark {
+  background-color: rgb(255,120,0);
+}
+
+.checkcontainer input:checked ~ .checkmark {
+  background-color: #005AFF;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkcontainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkcontainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/*----------------------------Custom radio buttons-------------------------------*/
+.radiocontainer {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 30px;
+  user-select: none;
+}
+
+.radiocontainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.radio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: darkorange;
+}
+
+.radiocontainer:hover input ~ .radio {
+  background-color: rgb(255,120,0)
+}
+
+.radiocontainer input:checked ~ .radio {
+  background-color: #005AFF;
+}
+
+.radio:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.radiocontainer input:checked ~ .radio:after {
+  display: block;
+}
+
+.radiocontainer .radio:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+  /*----------------------------Custom slider - Unused-------------------------------*/
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 7px;
+  border-radius: 5px;
+  background: darkorange;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  /*background: url('contrasticon.png');*/
+  background: #005AFF;
+  cursor: pointer;
+}
+

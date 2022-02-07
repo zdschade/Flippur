@@ -1,0 +1,75 @@
+body, html {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.dark-mode {
+    background-color: #212121;
+}
+
+.about-header {
+    top: 2.8vw;
+    width: 768px;
+    position: fixed;
+    z-index: -1;
+    transform: translatex(-384px);
+}
+
+.parallax {
+    height: 85%;
+
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.para-content {
+    width: 100%;
+    background-color: white;
+    color: black;
+    min-height: 300px;
+    text-align: center;
+    padding: 50px;
+    border-top: 3px solid orange;
+    border-bottom: 2px solid orange;
+}
+
+.para-content-dark {
+    background-color: #212121;
+    color: rgba(255,255,255,0.87);
+}
+
+.para-content h1 {
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: xx-large;
+    margin-bottom: 35px;
+}
+
+.para-content p {
+    font-size: x-large;
+}
+
+.pc-portrait {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+}
+
+.para-content img {
+    margin: 15px;
+    height: 345px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.pc-logodesign {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+}
+
+.pc-logodesign img {
+    margin-left: 50px;
+    margin-right: 50px;
+}

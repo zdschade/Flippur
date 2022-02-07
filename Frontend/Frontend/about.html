@@ -1,0 +1,125 @@
+<html>
+	<head>
+		<title>Flippur - About</title>
+
+		<link rel='icon' href='favicon.ico' type='image/x-icon/'>
+
+		<meta name="viewport" content="width-device-width, initial-scale-1">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="main.css">
+		<link rel="stylesheet" href="about.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+
+    <body onload='darkmode()'>
+        <div class="topnav" id='topnav'>
+			<a class='navitem' href="main.html">Home</a><a class="navactive" href="about.html">About</a>
+			<a href='main.html'><img id='mainlogo' src="static/images/logo_001.png"></a>
+			<img class='modebutton' id='modebutton' onmouseover="darkswitch()" onmouseleave='darkswitch_alt()' onclick='darkmode()' src='static/images/moon_symbol.png'>
+			<div class="search-container">
+				<input type="text" placeholder="Search here, please be specific" name="text" id="query">
+				<button type="submit" class='fa fa-search' onclick="async_http_get()" id='searchbutton'></button>
+			</div>
+        </div>
+	
+		<div class="parallax" style='height: 240px; text-align: center;'>
+			<img class='about-header' id='about-header' src='static/images/Flippur_Banner_002.png'></img>
+		</div>
+
+		<div class='para-content'>
+			<h1>Developers</h1>
+			<br>
+			<p>Garrett Moore & Zachary Schade</p>
+			<br>
+			<div class='pc-portrait'>
+				<img src='static/images/Garrett.jpg' style="margin-left: 58.14px;"></img>
+				<img src='static/images/Zack.jpg'></img>
+			</div>
+		</div>
+
+		<div class='parallax' style='background-image: url("static/images/flipper_001.jpg");'></div>
+
+		<!--
+		<div class='para-content'>
+			<h1>Logo Design</h1>
+			<p>Alicia Anthony</p>
+			<div class='pc-logodesign'>
+				<img src="static/images/logo_001.png" style="height: 200px; margin-top: 100px; margin-bottom: 100px; box-shadow: none;"></img>
+				<img src='static/images/Alicia.jpg' style="box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);"></img>
+				<img src="static/images/logo_001.png" style="height: 200px; margin-top: 100px; margin-bottom: 100px; box-shadow: none;"></img>
+			</div>
+		</div>
+		-->
+
+		<div class='para-content'>
+			<h1>Other Contributors</h1>
+			<br>
+			<p>Alicia Anthony: Logo Design</p>
+			<br>
+			<p>Douglas Rumbaugh: Advisor</p>
+			<br>
+			<br>
+			<img src='static/images/logo_001.png' style='height: 200px;'>
+		</div>
+
+		<div class='parallax' style='background-image: url("static/images/flipper_002.jpg");'></div>
+
+
+		<script type='text/javascript'>
+
+			var isdark = 0
+
+			function darkmode() {
+				var body = document.body
+				var topnav = document.getElementById('topnav')
+				var logo = document.getElementById('mainlogo')
+				var content = document.getElementsByClassName('para-content')
+				var header = document.getElementById('about-header')
+
+				body.classList.toggle('dark-mode');
+				topnav.classList.toggle('topnavdark')
+
+				for (i = 0; i < content.length; i++) {
+					content[i].classList.toggle('para-content-dark')
+				}
+
+				if (isdark === 0) {
+					isdark = 1
+					logo.setAttribute('src', 'static/images/logo_001_black.png')
+					header.setAttribute('src', 'static/images/Flippur_Banner_002_dark.png')
+				} else {
+					isdark = 0
+					logo.setAttribute('src', 'static/images/logo_001.png')
+					header.setAttribute('src', 'static/images/Flippur_Banner_002.png')
+				}
+			}
+
+			function darkswitch() {
+				var symbol = document.getElementById('modebutton')
+				
+				if (isdark === 0) {
+					symbol.setAttribute('src', 'static/images/moon_symbol.png')
+				} else {
+					symbol.setAttribute('src', 'static/images/sun_symbol.png')
+				}
+				
+			}
+
+			function darkswitch_alt() {
+				var symbol = document.getElementById('modebutton')
+				
+				if (isdark === 1) {
+					symbol.setAttribute('src', 'static/images/moon_symbol.png')
+				} else {
+					symbol.setAttribute('src', 'static/images/sun_symbol.png')
+				}
+			}
+		</script>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,704 @@
+<html>
+	<head>
+		<title>Flippur</title>
+
+		<link rel='icon' href='favicon.ico' type='image/x-icon/'>
+
+		<meta name="viewport" content="width-device-width, initial-scale-1">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="main.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	</head>
+	<body onload="darkmode()" id='main'>
+
+		<!--------------------------------------------Top nav---------------------------------------------->
+
+		<div class="topnav" id='topnav'>
+			<a class="navactive" href="main.html">Home</a><a class='navitem' href="about.html">About</a>
+			<a href='main.html'><img id='mainlogo' src="static/images/logo_001.png"></a>
+			<img class='modebutton' id='modebutton' onmouseover="darkswitch()" onmouseleave='darkswitch_alt()' onclick='darkmode()' src='static/images/moon_symbol.png'>
+			<div class="search-container">
+				<input type="text" placeholder="Search here, please be specific" name="text" id="query">
+				<button type="submit" class='fa fa-search' onclick="async_http_get()" id='searchbutton'></button>
+			</div>
+		</div>
+
+		<!---------------------------------------------Welcome text----------------------------------------------->
+		
+		<div class='welcome' id='welcome' style='display: block'>
+			<h1>Welcome!</h1>
+			<hr style='width: 35vw; border: 1px solid orange;'>
+			<h2>Use the search bar to search multiple resell sites at once</h2>
+			<h2>Filters for sites, price, etc can be found under "filters"</h2>
+			<h2>For best results, please be specific with your query</h2>
+			<h3>Ex: Instead of "Game boy", try "Game boy advanced SP"</h3>
+			<br>
+			<h3>Note: Craigslist is disabled by default because it slows down the results</h3>
+			<h3>Feel free to re-enable it in the filters</h3>
+		</div>
+
+		<!---------------------------------------------Filters--------------------------------------------->
+
+		<div id='fsidebar' class='filters'>
+			<a href='javascript:void(0)' class="filterclose" onclick='closefilters()'>&times;</a>
+			<h1>Filters</h1>
+			<hr style='border: 1px solid black;'>
+			<div class='filteroptions'>
+				<div class='dropdown' id='price'>
+					<a class='filterbtn'>Price</a>
+					<div class='dropdown-content' style='left: 5px'>
+						<div class='filterinput'>
+							<input placeholder="$ Minimum Price" type='number' id='minprice'>
+							<input placeholder="$ Maximum Price" type='number' id='maxprice'>
+						</div>
+					</div>
+				</div>
+
+				<br>
+
+				<div class='dropdown' id='valuediff'>
+					<a class='filterbtn' id='valuepreview'>Value Difference</a>
+					<div class='dropdown-content' style='left: 5px;'>
+						<div class='filterinput'>
+							<input placeholder="$ Value Difference" onmouseleave='updatepreview()' type='number' id='valueslider'>
+						</div>
+						<!--<input type='range' min='0' max='500' value='0' class='slider' id='valueslider' onclick="updatepreview()" onmouseover="updatepreview()">-->
+					</div>
+				</div>
+
+				<br>
+
+				<div class='dropdown' id='sites'>
+					<a class='filterbtn'>Sites</a>
+					<div class='dropdown-content' style='left: 5px'>
+						<label class='checkcontainer'>Ebay
+							<input type='checkbox' id="ebayfilter" checked='checked'>
+							<span class='checkmark'></span>
+						</label>
+						<label class='checkcontainer'>Letgo
+							<input type='checkbox' id="letgofilter" checked='checked'>
+							<span class='checkmark'></span>
+						</label>
+						<label class='checkcontainer'>OfferUp
+							<input type='checkbox' id="offerupfilter" checked='checked'>
+							<span class='checkmark'></span>
+						</label>
+						<label class='checkcontainer'>Craigslist
+							<input type='checkbox' id="craigslistfilter">
+							<span class='checkmark'></span>
+						</label>
+						<label class='checkcontainer'>eCrater
+							<input type='checkbox' id="ecraterfilter" checked='checked'>
+							<span class='checkmark'></span>
+						</label>
+						<label class='checkcontainer'>Bonanza
+							<input type='checkbox' id="bonanzafilter" checked='checked'>
+							<span class='checkmark'></span>
+						</label>
+					</div>
+				</div>
+
+				<br>
+
+				<div class='dropdown' id='condition'>
+					<a class='filterbtn'>Condition</a>
+					<div class='dropdown-content' style='left: 5px'>
+						<label class='checkcontainer'>New
+							<input type='checkbox' id="newfilter" checked='checked'>
+							<span class='checkmark'></span>
+						</label>
+						<label class='checkcontainer'>Used
+							<input type='checkbox' id="usedfilter" checked='checked'>
+							<span class='checkmark'></span>
+						</label>
+					</div>
+				</div>
+
+				<br>
+
+				<!--
+				<div class='slidecontainer' id='age'>
+					<input type='range' min='1' max='300' value='1' class='slider' id='ageslider'>
+				</div>
+				-->
+
+				<div class='dropdown' id='sortby'>
+					<a class='filterbtn'>Sort By:</a>
+					<div class='dropdown-content' style='left: 5px'>
+						<label class='radiocontainer'>Relevance
+							<input type='radio' id="relevance" name='sort' checked='checked'>
+							<span class='radio'></span>
+						</label>
+						<label class='radiocontainer'>Price: Low to High
+							<input type='radio' id="low to high" name='sort'>
+							<span class='radio'></span>
+						</label>
+						<label class='radiocontainer'>Price: High to Low
+							<input type='radio' id="high to low" name='sort'>
+							<span class='radio'></span>
+						</label>
+						<label class='radiocontainer'>Name: A to Z
+							<input type='radio' id="name a to z" name='sort'>
+							<span class='radio'></span>
+						</label>
+						<label class='radiocontainer'>Name: Z to A
+							<input type='radio' id="name z to a" name='sort'>
+							<span class='radio'></span>
+						</label>
+						<label class='radiocontainer'>Site: A to Z
+							<input type='radio' id="site a to z" name='sort'>
+							<span class='radio'></span>
+						</label>
+						<label class='radiocontainer'>Site: Z to A
+							<input type='radio' id="site z to a" name='sort'>
+							<span class='radio'></span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--------------------------------------------Debug menu - Hidden by default---------------------------------------------->
+
+		<div class="dropdown" id='debug' style='position: absolute;'>
+			<button class='dropbtn' id='debugbtn' style='display: none;'>Debug tools</button>
+			<div class='dropdown-content'>
+				<a onclick="show_fitem('manual')">Toggle overlay</a>
+				<a onclick="populate_fitem(test_fitem)">Populate</a>
+				<a onclick="populate_fitem(test_fitem2)">Populate 2</a>
+				<a onclick="testloader()">Test loader</a>
+				<a onclick="openfilters()">Open Sidebar</a>
+				<a onclick="clear_results()">Clear Items</a>
+				<a onclick="darkmode()">Dark Mode</a>
+			</div>
+		</div>
+
+		<!--------------------------------------------Misc items---------------------------------------------->
+
+		<p class='avgdisplay' id='average'></p>
+
+		<div class='loader' id='loader' style='display:none'></div>
+
+		<button class='filteropen' onclick="openfilters()" id='filteropen'>Filters</button>
+
+		<h1 id='no-results'></h1>
+
+		<!---------------------------------------------Item display--------------------------------------------->
+
+		<div class='itemgrid'>
+			<template id="Itemtmpl">
+				<!--<item class='grid-container'>-->
+				<div class='item' onclick='fulfill_fitem(this)' uid="" id="sitem">
+					<img class="itemimage", src=''></img>
+					<hr class='itemhr'>
+					<h1 class="itemtitle"></h1>
+					<a id="link" target='black_'><p class="itemprice"></p><img class="sitelogo"></img></a>
+				</div>
+			</template>
+		</div>
+
+		<!---------------------------------------------Full item view--------------------------------------------->
+
+		<div id="fitemcontainer" style="display: none">
+			<div class="fullitem">
+				<div class='fitemimages' id='fitemimages'>
+					<template id='imagetemp'>
+						<img class='fitemimage'>
+					</template>
+				</div>
+				<a class='closebutton' onclick="show_fitem('manual')">&times;</a>
+				<div class="fiteminfo">
+					<h1 class="fitemtitle"></h1>
+					<p class="fitemprice"></p>
+					<a href='' target ='_blank' id='logolink'><img class="fsitelogo"></img></a>
+					<iframe class="fiframe"></iframe>
+					<p class='fdesc'></p>
+				</div>
+			</div>
+		</div>
+
+		<!---------------------------------------------JS--------------------------------------------->
+
+		<script type="text/javascript">
+
+			// various variables that need to be set up when the page loads
+			var isdark = 0
+			var loader = document.getElementById('loader')
+			var welcome = document.getElementById('welcome')
+
+			//----------------------------------------Main item view-----------------------------------------------------
+
+			// Loader
+			function testloader() {
+				if (loader.style.display === 'none') {
+					loader.style.display = 'block'
+				} else {
+					loader.style.display = 'none'
+				}
+			}
+
+			// Assebles the query based on filters. Contains 1 function/filter
+			function assemblequery() {
+				function pricerange() {
+					var minprice = document.getElementById('minprice').value
+					var maxprice = document.getElementById('maxprice').value
+
+					return minprice + ',' + maxprice
+				};
+
+				function valuediff() {
+					diff = document.getElementById('valueslider').value
+
+					if ( diff.length === 0) {
+						return 0
+					} else {
+						return diff.toString(10)
+					}
+				};
+
+				function sites() {
+					var ebay = document.getElementById('ebayfilter').checked
+					var letgo = document.getElementById('letgofilter').checked
+					var offerup = document.getElementById('offerupfilter').checked
+					var craigslist = document.getElementById('craigslistfilter').checked
+					var ecrater = document.getElementById('ecraterfilter').checked
+					var bonanza = document.getElementById('bonanzafilter').checked
+
+					var allsites = ['Ebay', 'Letgo', 'OfferUp', 'Craigslist', 'eCrater', 'Bonanza']
+					var sitelist1 = [ebay, letgo, offerup, craigslist, ecrater, bonanza]
+					var sitelist2 = []
+
+					for (var i = 0; i < sitelist1.length; i++) {
+						var currsite = sitelist1[i]
+						var potential = allsites[i]
+
+						if (currsite === true) {
+							sitelist2.push(potential)
+						}
+					};
+
+					if (sitelist2.length == 0) {
+						sitelist2.push('Ebay')
+					};
+
+					return sitelist2
+				};
+
+				function condition() {
+					var condition = []
+
+					if (document.getElementById('newfilter').checked === true) {
+						condition.push('new')
+					}
+
+					if (document.getElementById('usedfilter').checked === true) {
+						condition.push('used')
+					}
+
+					if (condition.length == 0) {
+						condition.push('new')
+						condition.push('used')
+					}
+					return condition
+				};
+
+				function sortby() {
+					var relevance = document.getElementById('relevance').checked
+					var PLH = document.getElementById('low to high').checked
+					var PHL = document.getElementById('high to low').checked
+					var NAZ = document.getElementById('name a to z').checked
+					var NZA = document.getElementById('name z to a').checked
+					var SAZ = document.getElementById('site a to z').checked
+					var SZA = document.getElementById('site z to a').checked
+					
+					var sortkey = ['relevance', 'price a', 'price d', 'name a', 'name d', 'site a', 'site d']
+					var sortlist = [relevance, PLH, PHL, NAZ, NZA, SAZ, SZA]
+					var checked = 0
+
+					for (var i = 0; i < sortlist.length; i++) {
+						var currsort = sortlist[i]
+						if (currsort === true) {
+							checked = i
+						};
+					};
+
+					 return sortkey[checked]
+				};
+
+				return pricerange() + '&' + valuediff() + '&' + sites() + '&' + condition() + '&' + sortby()
+			};
+
+
+			// HTTP Get request
+			function async_http_get() {
+				loader.style.display = 'block'
+				
+				clear_results()
+				// Sets up the url to send to the backend
+				var query = document.getElementById('query').value;
+				var url = 'http://localhost:5000/s/' + query + '&' + assemblequery();
+
+				//  Makes the request to the backend
+				var request = new XMLHttpRequest();
+				request.onload = function() {
+					if (request.readyState === 4) {
+						console.log(request.status);
+						var serverdata = JSON.parse(this.responseText);
+						loader.style.display = 'none'
+						show_items(serverdata);
+
+						if (isdark === 1) {
+							itemsdarkmode()
+						}
+					} 
+				};
+				request.open('GET', url, true);
+				request.send(null);
+				/*
+				setTimeout(function() {
+					loader.style.display = 'none'
+				}, 14000);
+				*/
+			}
+
+			// Allows pressing "Enter" to search
+			var searchbar = document.getElementById('query');
+			searchbar.addEventListener("keyup", function(event) {
+				if (event.keyCode === 13) {
+					event.preventDefault();
+					document.getElementById('searchbutton').click();
+				}
+			});
+
+			// Site dictionary for logos
+			var sites = {
+				'Ebay': 'static/logos/ebay logo.png',
+				'Bonanza': 'static/logos/bonanza logo.png',
+				'eCrater': 'static/logos/ecrater logo.png',
+				'Craigslist': 'static/logos/craigslist logo.png',
+				'Offerup': 'static/logos/offerup logo.png',
+				'Letgo': 'static/logos/letgo logo.png'
+			};
+
+			var test_fitem = {
+				'images': ["test-thumbnail-image.jpg", "test-thumbnail-image.jpg", "test-thumbnail-image.jpg", "test-thumbnail-image.jpg", "test-thumbnail-image.jpg"],
+				'name': 'Mater Pillow',
+				'price': '$1000',
+				'site' : 'Ebay',
+			}
+
+			var test_fitem2 = {
+				'images': "test-thumbnail-image.jpg",
+				'name': 'Also a Mater Pillow',
+				'price': '$Priceless',
+				'site' : 'Craigslist',
+			}
+			
+			var template = document.querySelector('#Itemtmpl');
+
+			// Uses the template tag to place different items on the screen at the same time
+			function show_items(list) {
+				if (list == []) {
+					document.getElementById('no-results').innerHTML = 'No Results'
+				}
+
+				// Displays the average value of the query
+				var avg = document.getElementById('average')
+				avg.innerHTML = "Average value: $" + list[0]
+
+				for (var i = 1; i < list.length; i++) {
+					// Clones the template and make a variable for the list index
+					var clone = template.content.cloneNode(true);
+					var listindex = list[i];
+
+					// Sets the thumbnail image
+					var image = clone.querySelectorAll('img');
+					image[0].setAttribute('src', listindex.image);
+
+					// Sets the title
+					var title = clone.querySelectorAll('h1');
+					title[0].innerHTML = listindex.name;
+
+					// Sets the site logo
+					var site = clone.querySelector('.sitelogo');
+					site.setAttribute('src', sites[listindex.site])
+
+					// Sets the price
+					var price = clone.querySelector('.itemprice');
+					/*
+					if (listindex.site == 'Letgo') {
+						price.innerHTML = listindex.price
+					} else if (listindex.price.toString().length < 3) {
+						price.innerHTML = '$' + listindex.price + '.00'
+					} else if (listindex.price.toString().length == 3) {
+						price.innerHTML = '$' + listindex.price + '0'
+					} else {
+						price.innerHTML = listindex.price
+					};
+					*/
+					price.innerHTML = listindex.price
+
+					var link = clone.querySelector('#sitem');
+					link.setAttribute('uid', listindex.id)
+
+					var qlink = clone.querySelector('#link');
+					qlink.setAttribute('href', listindex.link)
+
+					// Appends a new child
+					template.parentNode.appendChild(clone);
+				};
+			};
+
+			function clear_results() {
+				welcome.innerHTML = ''
+				allitems = document.querySelectorAll('.item');
+					for (var j = 0; j < allitems.length; j++) {
+						allitems[j].outerHTML = '';
+					};
+			}
+
+			//--------------------------------------Full item-------------------------------------------------------
+
+			// Requests the necessary data for the full item view
+			function get_fitem(uid) {
+				loader.style.display = 'block'
+				// Sets up the url to send to the backend
+				var url = 'http://localhost:5000/l/' + uid;
+
+				//  Makes the request to the backend
+				var request = new XMLHttpRequest();
+				request.onload = function() {
+					if (request.readyState === 4) {
+						console.log(request.status);
+						var itemdata = JSON.parse(this.responseText);
+						populate_fitem(itemdata);
+						loader.style.display = 'none'
+						show_fitem('auto')
+					} 
+				};
+				request.open('GET', url, true);
+				request.send(null);
+			}
+
+			// keeps track of whether there are images displayed in the full view
+			var imgcount = 0
+
+			// populates the full item view
+			function populate_fitem(dic) {
+				var imagetemp = document.getElementById('imagetemp')
+				/*image.setAttribute('src', dic.image)*/
+				console.log(dic.images)
+
+				// runs if no images are displayed
+				function noimages() {
+					var imglen = 0
+					if (dic.images.length > 5) {
+						imglen = 5
+					} else {
+						imglen = dic.images.length
+					}
+
+
+					console.log(dic.images.length)
+					for (var i = 0; i < imglen; i++) {
+						var clone = imagetemp.content.cloneNode(true);
+						var listindex = dic.images[i];
+
+						simage = clone.querySelector('.fitemimage');
+						simage.setAttribute('src', listindex);
+
+						imagetemp.parentNode.appendChild(clone)
+
+						imgcount = 1
+					};
+				};
+				
+				// runs if there are already images displayed
+				function alreadyimages() {
+					timage1 = document.querySelectorAll('.fitemimage');
+					for (var j = 0; j < timage1.length; j++) {
+						timage1[j].outerHTML = '';
+					};
+						
+				};
+				
+				if (imgcount === 0) {
+					noimages()
+			    } else {
+					alreadyimages()
+					noimages()
+					imgcount = 1
+				}
+				
+				var title = document.getElementsByClassName('fitemtitle')[0]
+				title.innerHTML = dic.name
+				
+				var price = document.getElementsByClassName('fitemprice')[0]
+				if (dic.site == 'Offerup') {
+					price.innerHTML = dic.price
+				} else {
+					price.innerHTML = dic.price
+				}
+
+				var logo = document.getElementsByClassName('fsitelogo')[0]
+				logo.setAttribute('src', sites[dic.site])
+				logo.setAttribute('href', dic.link)
+				logo.style.display = 'block'
+
+				var logolink = document.getElementById('logolink')
+				logolink.setAttribute('href', dic.link)
+
+				var iframe = document.getElementsByClassName('fiframe')[0]
+				var desc = document.getElementsByClassName('fdesc')[0]
+				if (dic.site == 'Ebay') {
+					desc.innerHTML = ""
+					iframe.setAttribute('src', dic.iframe)
+				} else {
+					iframe.setAttribute('src', "")
+					desc.innerHTML = dic.iframe
+				}
+			};
+
+			// shows the full item view
+			function show_fitem(mode) {
+				var overlay = document.getElementById("fitemcontainer");
+				if ( mode === 'auto') {
+					overlay.style.display = 'block'
+				} else {
+
+					if (overlay.style.display === "none") {
+						overlay.style.display = "block";
+					} else {
+						overlay.style.display = "none";
+					}
+				}
+			}
+
+			// runs the full item functions
+			function fulfill_fitem(item) {
+				uid = item.getAttribute('uid')
+				console.log(uid)
+
+				get_fitem(uid)
+			}
+
+			// -----------------------------------Filters-----------------------------------------------------------------------------
+
+			function openfilters() {
+				document.getElementById('fsidebar').style.width = '250px';
+				document.getElementById('main').style.marginRight = '250px';
+				document.getElementById('filteropen').style.display = 'none'
+			}
+
+			function closefilters() {
+				document.getElementById('fsidebar').style.width = '0';
+				document.getElementById('main').style.marginRight = '0';
+				document.getElementById('filteropen').style.display = 'inline'
+			}
+
+			var valueslider = document.getElementById('valueslider');
+			var preview = document.getElementById('valuepreview');
+
+			// updates the preview of the value difference
+			function updatepreview() {
+				preview.innerHTML = 'Value Difference: $' + valueslider.value
+			}
+
+			// ----------------------------------Dark mode functions------------------------------------------------------------------------------
+
+			// seperate functions to change all items in the main view to dark
+			function itemsdarkmode() {
+				var item = document.getElementsByClassName('item')
+
+				for (i = 0; i < item.length; i++) {
+					item[i].classList.toggle('itemdark')
+				}
+			}
+
+			// main darkmdoe function
+			function darkmode() {
+				var body = document.body
+				var topnav = document.getElementById('topnav')
+				var dropdown_content = document.getElementsByClassName('dropdown-content')
+				var itemgrid = document.getElementsByClassName('itemgrid')[0]
+				var average = document.getElementById('average')
+				var fitem = document.getElementsByClassName('fullitem')[0]
+				var filteropen = document.getElementsByClassName('filteropen')[0]
+				var logo = document.getElementById('mainlogo')
+				var filterinput = document.getElementsByClassName('filterinput')
+				//var welcome = document.getElementById('welcome')
+
+				body.classList.toggle('dark-mode');
+				topnav.classList.toggle('topnavdark')
+
+				for (i = 0; i < dropdown_content.length; i++) {
+					dropdown_content[i].classList.toggle('dropdown-contentdark')
+				}
+
+				itemgrid.classList.toggle('itemgriddark')
+				average.classList.toggle('avgdisplaydark')
+				fitem.classList.toggle('fitemdark')
+				filteropen.classList.toggle('filteropendark')
+				filterinput[0].classList.toggle('filterinputdark')
+				filterinput[1].classList.toggle('filterinputdark')
+				welcome.classList.toggle('welcomedark')
+
+
+				itemsdarkmode()
+
+				var symbol = document.getElementById('modebutton')
+
+				if (isdark === 0) {
+					isdark = 1
+					logo.setAttribute('src', 'static/images/logo_001_black.png')
+					symbol.setAttribute('style', 'filter: none;')
+				} else {
+					isdark = 0
+					logo.setAttribute('src', 'static/images/logo_001.png')
+					symbol.setAttribute('style', 'filter: invert(72%) sepia(81%) saturate(3004%) hue-rotate(359deg) brightness(102%) contrast(107%);')
+				}
+			}
+
+			// operates the dark mode/light mode toggle
+			function darkswitch() {
+				var symbol = document.getElementById('modebutton')
+				
+				if (isdark === 0) {
+					symbol.setAttribute('src', 'static/images/moon_symbol.png')
+				} else {
+					symbol.setAttribute('src', 'static/images/sun_symbol.png')
+				}
+				
+			}
+
+			// operates the dark mode/light mode toggle, necessary for the sun/moon animation
+			function darkswitch_alt() {
+				var symbol = document.getElementById('modebutton')
+				
+				if (isdark === 1) {
+					symbol.setAttribute('src', 'static/images/moon_symbol.png')
+				} else {
+					symbol.setAttribute('src', 'static/images/sun_symbol.png')
+				}
+			}
+
+			//--------------------------------------------Shows/hides the debug menu-------------------------------------------------
+
+			function debug() {
+				var debug = document.getElementById('debugbtn')
+
+				if (debug.style.display == 'block') {
+					debug.style.display = 'none'
+				} else {
+					debug.style.display = 'block'
+				}
+			}
+
+		</script>
+		
+</body>
+</html>
